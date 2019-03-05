@@ -2,6 +2,8 @@
 """
 import os
 import time
+import sys
+sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
 import cv2
 import numpy as np
 from model.yolo_model import YOLO
@@ -106,7 +108,8 @@ def detect_video(video, yolo, all_classes):
         yolo: YOLO, yolo model.
         all_classes: all classes name.
     """
-    video_path = os.path.join("videos", "test", video)
+    # video_path = os.path.join("videos", "test", video)
+    video_path="/dev/video0"
     camera = cv2.VideoCapture(video_path)
     cv2.namedWindow("detection", cv2.WINDOW_AUTOSIZE)
 
@@ -138,7 +141,7 @@ def detect_video(video, yolo, all_classes):
     
 
 if __name__ == '__main__':
-    yolo = YOLO(0.6, 0.5)
+    yolo = YOLO(0.4, 0.4)
     file = 'data/coco_classes.txt'
     all_classes = get_classes(file)
 
