@@ -1,6 +1,10 @@
 """YOLO v3 output
 """
 import numpy as np
+
+import os
+os.environ["KERAS_BACKEND"] = "plaidml.keras.backend"
+
 import keras.backend as K
 from keras.models import load_model
 
@@ -15,7 +19,8 @@ class YOLO:
         """
         self._t1 = obj_threshold
         self._t2 = nms_threshold
-        self._yolo = load_model('data/yolo.h5')
+        # self._yolo = load_model('data/yolo.h5')
+        self._yolo = load_model('data/yolov3_tiny.h5')
 
     def _sigmoid(self, x):
         """sigmoid.
@@ -147,9 +152,14 @@ class YOLO:
             classes: ndarray, classes of objects.
             scores: ndarray, scores of objects.
         """
-        masks = [[6, 7, 8], [3, 4, 5], [0, 1, 2]]
-        anchors = [[10, 13], [16, 30], [33, 23], [30, 61], [62, 45],
-                   [59, 119], [116, 90], [156, 198], [373, 326]]
+        # masks = [[6, 7, 8], [3, 4, 5], [0, 1, 2]]
+        # anchors = [[10, 13], [16, 30], [33, 23], [30, 61], [62, 45],
+        #            [59, 119], [116, 90], [156, 198], [373, 326]]
+
+        # tiny-yolo anchors
+        masks = [[3, 4, 5], [1, 2, 3]]
+        anchors = [[10, 14], [23, 27], [37, 58], [81, 82], [135, 169], [344, 319]]
+
 
         boxes, classes, scores = [], [], []
 
