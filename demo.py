@@ -3,7 +3,6 @@
 import os
 import time
 import sys
-sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
 import cv2
 import numpy as np
 from model.yolo_model import YOLO
@@ -92,7 +91,7 @@ def detect_image(image, yolo, all_classes):
     boxes, classes, scores = yolo.predict(pimage, image.shape)
     end = time.time()
 
-    print('time: {0:.2f}s'.format(end - start))
+    print('fps: {0:.4f}s'.format( 1.0/ (end - start)))
 
     if boxes is not None:
         draw(image, boxes, scores, classes, all_classes)
